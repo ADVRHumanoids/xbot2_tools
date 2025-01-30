@@ -20,25 +20,21 @@ bool TrajectoryPlugin::on_initialize()
     }
 
     // set optional parameters
-    std::map<std::string, double> freq_min, freq_max, period, phase;
+    double freq_min = 0.1;
+    double freq_max = 0.1;
+    double period = 30.0;
+    std::map<std::string, double> phase;
+
     getParam("~freq_min", freq_min);
     getParam("~freq_max", freq_max);
     getParam("~period", period);
     getParam("~phase_offset", phase);
 
-    for(auto [jname, f] : freq_min)
+    for(auto& [unused, trj] : _trj_map)
     {
-        _trj_map.at(_robot->getDeviceInstance<Hal::JointBase>(jname)).freq_min_hz = f;
-    }
-    
-    for(auto [jname, f] : freq_max)
-    {
-        _trj_map.at(_robot->getDeviceInstance<Hal::JointBase>(jname)).freq_max_hz = f;
-    }
-
-    for(auto [jname, t] : period)
-    {
-        _trj_map.at(_robot->getDeviceInstance<Hal::JointBase>(jname)).period = t;
+        trj.freq_min_hz = freq_min;
+        trj.freq_max_hz = freq_max;
+        trj.period = period;
     }
 
     for(auto [jname, p] : phase)
