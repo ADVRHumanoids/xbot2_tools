@@ -13,6 +13,14 @@ bool TrajectoryPlugin::on_initialize()
         Chirp trj;
         trj.amplitude = a;
 
+        auto jptr = _robot->getDeviceInstance<Hal::JointBase>(jname);
+
+        if(!jptr)
+        {
+            jerror("joint {} does not exist", jname);
+            continue;
+        }
+
         _trj_map[_robot->getDeviceInstance<Hal::JointBase>(jname)] = trj;
 
         // set ctrl mode to be acquired on start
@@ -39,7 +47,16 @@ bool TrajectoryPlugin::on_initialize()
 
     for(auto [jname, p] : phase)
     {
-        _trj_map.at(_robot->getDeviceInstance<Hal::JointBase>(jname)).phase_offset = p;
+
+        auto jptr = _robot->getDeviceInstance<Hal::JointBase>(jname);
+
+        if(!jptr)
+        {
+            jerror("joint {} does not exist", jname);
+            continue;
+        }
+
+        _trj_map.at(jptr).phase_offset = p;
     }
 
     return true;
