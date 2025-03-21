@@ -1,7 +1,7 @@
 #include "monitor.h"
 
-#include <xbot2/ros/ros_support.h>
-#include <xbot_msgs/CustomState.h>
+#include <xbot2/ros/ros2_support.h>
+#include <xbot_msgs/msg/custom_state.hpp>
 
 using namespace XBot::tools;
 
@@ -40,7 +40,7 @@ private:
 
 
 
-    PublisherPtr<xbot_msgs::CustomState> _pub;
+    PublisherPtr<xbot_msgs::msg::CustomState> _pub;
 
     std::vector<std::pair<std::string, double*>> _vars;
 
@@ -48,8 +48,9 @@ private:
 
 Monitor::Impl::Impl(std::string name)
 {
-    XBot::RosSupport ros;
-    _pub = ros.advertise<xbot_msgs::CustomState>(name, 10);
+    XBot::Ros2Support ros(XBot::Ros2Support::get_main_node());
+
+    _pub = ros.advertise<xbot_msgs::msg::CustomState>(name, 10);
 
     if(!_pub)
     {
@@ -91,7 +92,7 @@ bool Monitor::Impl::publish()
     auto now = XBot::chrono::system_clock::now();
     auto now_ts = XBot::chrono::duration_chrono_to_timespec(now.time_since_epoch());
     msg.header.stamp.sec = now_ts.tv_sec;
-    msg.header.stamp.nsec = now_ts.tv_sec;
+    msg.header.stamp.nanosec = now_ts.tv_nsec;
 
     if(msg.name.size() != _vars.size())
     {

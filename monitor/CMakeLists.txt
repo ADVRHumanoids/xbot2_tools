@@ -1,5 +1,6 @@
 find_package(xbot2 REQUIRED)
-
+find_package(rclcpp REQUIRED)
+find_package(xbot_msgs REQUIRED)
 ## monitor
 
 add_library(monitor SHARED src/monitor.cpp)
@@ -7,7 +8,7 @@ add_library(monitor SHARED src/monitor.cpp)
 set_target_properties(monitor PROPERTIES OUTPUT_NAME xbot2_tools_monitor)
 
 target_link_libraries(monitor
-    PRIVATE xbot2::xbot2 xbot2::xbot2_ros_support)
+    PRIVATE xbot2::xbot2 xbot2::xbot2_ros2_support xbot_msgs::xbot_msgs__rosidl_typesupport_cpp)
 
 target_include_directories(monitor
     PUBLIC

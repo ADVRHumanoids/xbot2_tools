@@ -8,6 +8,9 @@ bool TrajectoryPlugin::on_initialize()
     std::map<std::string, double> amplitude;
     getParam("~amplitude", amplitude);
 
+    // ctrl map
+    std::map<std::string, ControlMode> ctrl_map;
+
     for(auto [jname, a] : amplitude)
     {
         Chirp trj;
@@ -24,7 +27,7 @@ bool TrajectoryPlugin::on_initialize()
         _trj_map[_robot->getDeviceInstance<Hal::JointBase>(jname)] = trj;
 
         // set ctrl mode to be acquired on start
-        setDefaultControlMode({{jname, ControlMode::Position()}});
+        ctrl_map[jname] = ControlMode::Position();
     }
 
     // set optional parameters
@@ -58,6 +61,8 @@ bool TrajectoryPlugin::on_initialize()
 
         _trj_map.at(jptr).phase_offset = p;
     }
+
+    setDefaultControlMode(ctrl_map);
 
     return true;
 
