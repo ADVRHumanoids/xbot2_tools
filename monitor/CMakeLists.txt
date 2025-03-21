@@ -21,6 +21,11 @@ install(TARGETS monitor
     EXPORT ${PROJECT_NAME}Targets
 )
 
+## install headers
+install(DIRECTORY include/xbot2_tools
+    DESTINATION include
+    )
+
 
 ## trajectory plugin
 
@@ -29,7 +34,8 @@ add_xbot2_plugin(trajectory_plugin src/trajectory_plugin.cpp)
 install(TARGETS trajectory_plugin DESTINATION lib)
 
 
-## install headers
-install(DIRECTORY include/xbot2_tools
-    DESTINATION include
-    )
+## gcomp plugin
+
+add_xbot2_plugin(gcomp_plugin src/gcomp_plugin.cpp)
+
+install(TARGETS gcomp_plugin DESTINATION lib)
