@@ -29,9 +29,7 @@ void GcompPlugin::run()
     // TBD handle IMU
 
     _robot->model().computeGravityCompensation(_g);
-    _robot->model().setJointEffort(_g);
-
-    _robot->setReferenceFrom(_robot->model(), XBot::Sync::Effort);
+    _robot->setEffortReference(_g);
     _robot->move();
 
 }
