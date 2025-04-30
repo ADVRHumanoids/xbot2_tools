@@ -39,3 +39,9 @@ install(TARGETS trajectory_plugin DESTINATION lib)
 add_xbot2_plugin(gcomp_plugin src/gcomp_plugin.cpp)
 
 install(TARGETS gcomp_plugin DESTINATION lib)
+
+## internal_force_comp plugin
+
+add_xbot2_plugin(internal_force_comp src/internal_force_comp.cpp)
+
+install(TARGETS internal_force_comp DESTINATION lib)
