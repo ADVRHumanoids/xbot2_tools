@@ -40,3 +40,11 @@ install(TARGETS trajectory_plugin DESTINATION lib)
 add_xbot2_plugin(gcomp_plugin src/gcomp_plugin.cpp)
 
 install(TARGETS gcomp_plugin DESTINATION lib)
+
+
+## link-side contact projection plugin
+
+add_xbot2_plugin(internal_stress_removal_plugin
+    src/internal_stress_removal_plugin.cpp)
+
+install(TARGETS internal_stress_removal_plugin DESTINATION lib)
